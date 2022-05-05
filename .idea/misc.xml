@@ -4,6 +4,8 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/GMT/AndroidStudioProjects/DHKTPM15A_Nhom06_ToDoApp/app/src/main/res/drawable/custom_button_reg.xml" value="0.2203125" />
+        <entry key="..\:/Users/GMT/AndroidStudioProjects/DHKTPM15A_Nhom06_ToDoApp/app/src/main/res/layout/activity_login.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/GMT/AndroidStudioProjects/DHKTPM15A_Nhom06_ToDoApp/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Users/GMT/AndroidStudioProjects/DHKTPM15A_Nhom06_ToDoApp/app/src/main/res/layout/activity_register.xml" value="0.22" />
       </map>
     </option>
