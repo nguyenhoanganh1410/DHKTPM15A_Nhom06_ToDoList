@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.dhktpm15a_nhom06_todoapp.activity.HomeActivity;
 import com.example.dhktpm15a_nhom06_todoapp.activity.LoginActivity;
 import com.example.dhktpm15a_nhom06_todoapp.activity.RegisterActivity;
 
@@ -26,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                // Toast.makeText(MainActivity.this, "user registered sucessfilly", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                 startActivity(intent);
             }
         });

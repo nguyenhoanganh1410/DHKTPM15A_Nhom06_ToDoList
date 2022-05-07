@@ -3,10 +3,21 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/GMT/AndroidStudioProjects/DHKTPM15A_Nhom06_ToDoApp/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2203125" />
+        <entry key="..\:/Users/GMT/AndroidStudioProjects/DHKTPM15A_Nhom06_ToDoApp/app/src/main/res/drawable/add_button.xml" value="0.2203125" />
         <entry key="..\:/Users/GMT/AndroidStudioProjects/DHKTPM15A_Nhom06_ToDoApp/app/src/main/res/drawable/custom_button_reg.xml" value="0.2203125" />
+        <entry key="..\:/Users/GMT/AndroidStudioProjects/DHKTPM15A_Nhom06_ToDoApp/app/src/main/res/drawable/custom_spinner.xml" value="0.2203125" />
+        <entry key="..\:/Users/GMT/AndroidStudioProjects/DHKTPM15A_Nhom06_ToDoApp/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2203125" />
+        <entry key="..\:/Users/GMT/AndroidStudioProjects/DHKTPM15A_Nhom06_ToDoApp/app/src/main/res/drawable/shadow_layer_list.xml" value="0.2203125" />
+        <entry key="..\:/Users/GMT/AndroidStudioProjects/DHKTPM15A_Nhom06_ToDoApp/app/src/main/res/layout/activity_home_screen.xml" value="0.22" />
+        <entry key="..\:/Users/GMT/AndroidStudioProjects/DHKTPM15A_Nhom06_ToDoApp/app/src/main/res/layout/activity_item_task.xml" value="0.33" />
         <entry key="..\:/Users/GMT/AndroidStudioProjects/DHKTPM15A_Nhom06_ToDoApp/app/src/main/res/layout/activity_login.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/GMT/AndroidStudioProjects/DHKTPM15A_Nhom06_ToDoApp/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Users/GMT/AndroidStudioProjects/DHKTPM15A_Nhom06_ToDoApp/app/src/main/res/layout/activity_register.xml" value="0.22" />
+        <entry key="..\:/Users/GMT/AndroidStudioProjects/DHKTPM15A_Nhom06_ToDoApp/app/src/main/res/layout/color_spinner_layout.xml" value="0.2" />
+        <entry key="..\:/Users/GMT/AndroidStudioProjects/DHKTPM15A_Nhom06_ToDoApp/app/src/main/res/layout/home_screen.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/GMT/AndroidStudioProjects/DHKTPM15A_Nhom06_ToDoApp/app/src/main/res/layout/spinner_dropdown_layout.xml" value="0.2" />
+        <entry key="..\:/Users/GMT/AndroidStudioProjects/DHKTPM15A_Nhom06_ToDoApp/app/src/main/res/layout/spinner_text.xml" value="0.20416666666666666" />
       </map>
     </option>
   </component>
