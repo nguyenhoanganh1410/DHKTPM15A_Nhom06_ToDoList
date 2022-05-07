@@ -39,6 +39,14 @@ public class TaskAdapter extends BaseAdapter {
         this.listTask = listTask;
     }
 
+    public List<Task> getListTask() {
+        return listTask;
+    }
+
+    public void setListTask(List<Task> listTask) {
+        this.listTask = listTask;
+    }
+
     @Override
     public int getCount() {
         if (listTask.size() != 0 && !listTask.isEmpty()) {

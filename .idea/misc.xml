@@ -3,6 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/HK2/MobileProject/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
+        <entry key="..\:/HK2/MobileProject/app/src/main/res/layout/activity_home_screen.xml" value="0.275" />
+        <entry key="..\:/HK2/MobileProject/app/src/main/res/layout/activity_item_task.xml" value="0.275" />
+        <entry key="..\:/HK2/MobileProject/app/src/main/res/layout/activity_login.xml" value="0.275" />
+        <entry key="..\:/HK2/MobileProject/app/src/main/res/layout/activity_main.xml" value="0.275" />
+        <entry key="..\:/HK2/MobileProject/app/src/main/res/layout/activity_register.xml" value="0.275" />
+        <entry key="..\:/HK2/MobileProject/app/src/main/res/layout/color_spinner_layout.xml" value="0.275" />
+        <entry key="..\:/HK2/MobileProject/app/src/main/res/layout/spinner_dropdown_layout.xml" value="0.275" />
         <entry key="..\:/Users/GMT/AndroidStudioProjects/DHKTPM15A_Nhom06_ToDoApp/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2203125" />
         <entry key="..\:/Users/GMT/AndroidStudioProjects/DHKTPM15A_Nhom06_ToDoApp/app/src/main/res/drawable/add_button.xml" value="0.2203125" />
         <entry key="..\:/Users/GMT/AndroidStudioProjects/DHKTPM15A_Nhom06_ToDoApp/app/src/main/res/drawable/custom_button_reg.xml" value="0.2203125" />

@@ -31,6 +31,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
 
     private TextView txtNameUser;
     private ImageView imgLogout;
+    private   TaskAdapter taskAdapter;
     FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,15 +59,15 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         listTask = new ArrayList<>();
         long millis = System.currentTimeMillis();
         listTask.add(new Task(1, "Work", "android", new java.util.Date(millis)      ));
-        listTask.add(new Task(2, "Work", "android", new java.util.Date(millis)      ));
-        listTask.add(new Task(3, "Work", "android", new java.util.Date(millis)      ));
+        listTask.add(new Task(2, "Study", "android", new java.util.Date(millis)      ));
+        listTask.add(new Task(3, "Family", "android", new java.util.Date(millis)      ));
         listTask.add(new Task(4, "Work", "android", new java.util.Date(millis)      ));
 
 
 
 
 
-        TaskAdapter taskAdapter = new TaskAdapter(this, R.layout.activity_item_task, listTask);
+       taskAdapter = new TaskAdapter(this, R.layout.activity_item_task, listTask);
         listView.setAdapter(taskAdapter);
 
 
@@ -92,10 +93,25 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         Toast.makeText(this, adapterView.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
+        FilterTask(adapterView.getSelectedItem().toString());
+
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
 
+    }
+    public void FilterTask(String name){
+        if (name.contains("All")){
+            name="";
+        }
+    ArrayList<Task> list = new ArrayList<>();
+        for (Task task : listTask){
+            if (task.getTitle().contains(name)){
+                list.add(task);
+            }
+        }
+        taskAdapter.setListTask(list);
+        taskAdapter.notifyDataSetChanged();
     }
 }
