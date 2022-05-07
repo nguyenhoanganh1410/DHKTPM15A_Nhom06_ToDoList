@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -12,9 +13,12 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.dhktpm15a_nhom06_todoapp.MainActivity;
 import com.example.dhktpm15a_nhom06_todoapp.R;
 import com.example.dhktpm15a_nhom06_todoapp.adaper.TaskAdapter;
 import com.example.dhktpm15a_nhom06_todoapp.model.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,11 +28,18 @@ import java.util.List;
 public class HomeActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private List<Task> listTask;
     private ListView listView;
+
+    private TextView txtNameUser;
+    private ImageView imgLogout;
+    FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
 
+        //get id
+        txtNameUser = findViewById(R.id.txtNameUser);
+        imgLogout = findViewById(R.id.imgLogout);
 
         //custom drop list
         Spinner spiner = findViewById(R.id.spinner2);
@@ -59,7 +70,20 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         listView.setAdapter(taskAdapter);
 
 
-
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        if(user != null){
+            txtNameUser.setText("Hi, "+ user.getEmail());
+        }
+        imgLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Toast.makeText(MainActivity.this, "user registered sucessfilly", Toast.LENGTH_SHORT).show();
+                mAuth.signOut();
+                Intent intent = new Intent(HomeActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 
