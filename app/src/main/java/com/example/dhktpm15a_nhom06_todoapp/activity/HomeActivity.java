@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.dhktpm15a_nhom06_todoapp.AddScreenActivity;
 import com.example.dhktpm15a_nhom06_todoapp.MainActivity;
 import com.example.dhktpm15a_nhom06_todoapp.R;
 import com.example.dhktpm15a_nhom06_todoapp.adaper.TaskAdapter;
@@ -31,6 +33,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
 
     private TextView txtNameUser;
     private ImageView imgLogout;
+    private Button btnAddTask;
     FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,9 +43,20 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         //get id
         txtNameUser = findViewById(R.id.txtNameUser);
         imgLogout = findViewById(R.id.imgLogout);
+        btnAddTask = findViewById(R.id.btnAddTask);
+
+        btnAddTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Toast.makeText(MainActivity.this, "user registered sucessfilly", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(HomeActivity.this, AddScreenActivity.class);
+                startActivity(intent);
+            }
+        });
 
         //custom drop list
         Spinner spiner = findViewById(R.id.spinner2);
+
         ArrayAdapter adapter = ArrayAdapter.createFromResource(
                 this,
                 R.array.android_dropdown_arrays,
@@ -51,16 +65,17 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_layout);
         spiner.setAdapter(adapter);
         spiner.setOnItemSelectedListener(this);
+
         //
 
 
         listView = (ListView) findViewById(R.id.idListView);
         listTask = new ArrayList<>();
         long millis = System.currentTimeMillis();
-        listTask.add(new Task(1, "Work", "android", new java.util.Date(millis)      ));
-        listTask.add(new Task(2, "Work", "android", new java.util.Date(millis)      ));
-        listTask.add(new Task(3, "Work", "android", new java.util.Date(millis)      ));
-        listTask.add(new Task(4, "Work", "android", new java.util.Date(millis)      ));
+        listTask.add(new Task(1, "Work", "android", new Date(millis)      ));
+        listTask.add(new Task(2, "Work", "android", new Date(millis)      ));
+        listTask.add(new Task(3, "Work", "android", new Date(millis)      ));
+        listTask.add(new Task(4, "Work", "android", new Date(millis)      ));
 
 
 

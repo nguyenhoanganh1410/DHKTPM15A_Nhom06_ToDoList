@@ -2,12 +2,18 @@
     <string name="app_name">DHKTPM15A_Nhom06_ToDoApp</string>
 
 
-        <string-array name="android_dropdown_arrays">
-            <item>All</item>
-            <item>Work</item>
-            <item>Study</item>
-            <item>Family</item>
-        </string-array>
+    <string-array name="android_dropdown_arrays">
+        <item>All</item>
+        <item>Work</item>
+        <item>Study</item>
+        <item>Family</item>
+    </string-array>
+
+    <string-array name="android_dropdown_arrays_add">
+        <item>Work</item>
+        <item>Study</item>
+        <item>Family</item>
+    </string-array>
 
     <string-array name="options">
         <item>delete</item>
