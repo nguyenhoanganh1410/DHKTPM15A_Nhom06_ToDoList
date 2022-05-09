@@ -8,7 +8,7 @@
     tools:context=".AddScreenActivity">
 
     <EditText
-        android:id="@+id/textView2"
+        android:id="@+id/txtAddContent"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_marginStart="25dp"
@@ -46,7 +46,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/button"
+        android:id="@+id/btnAddScreen"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginStart="25dp"
@@ -108,8 +108,8 @@
         android:textColor="#2B927D"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/textView2"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintStart_toStartOf="@+id/txtAddContent"
+        app:layout_constraintTop_toBottomOf="@+id/txtAddContent" />
 
 
 
