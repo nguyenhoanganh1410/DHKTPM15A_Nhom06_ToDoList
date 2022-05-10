@@ -1,7 +1,10 @@
 package com.example.dhktpm15a_nhom06_todoapp.activity;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -11,14 +14,21 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.dhktpm15a_nhom06_todoapp.MainActivity;
 import com.example.dhktpm15a_nhom06_todoapp.R;
 import com.example.dhktpm15a_nhom06_todoapp.adaper.TaskAdapter;
 import com.example.dhktpm15a_nhom06_todoapp.model.Task;
+import com.example.dhktpm15a_nhom06_todoapp.model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -72,10 +82,31 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
 
 
         mAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = mAuth.getCurrentUser();
-        if(user != null){
-            txtNameUser.setText("Hi, "+ user.getEmail());
+//        FirebaseUser user = mAuth.getCurrentUser();
+
+        FirebaseDatabase db = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = db.getReference("User");
+
+        Intent intent = getIntent();
+        if (intent!=null){
+            String uid = intent.getStringExtra("uid");
+            myRef.child(uid).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    User user1 = snapshot.getValue(User.class);
+                    Log.d(TAG,user1.toString());
+                    txtNameUser.setText("Hi" +user1.getName());
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
         }
+//        if(user != null){
+//            txtNameUser.setText("Hi, "+ user.getEmail());
+//        }
         imgLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
