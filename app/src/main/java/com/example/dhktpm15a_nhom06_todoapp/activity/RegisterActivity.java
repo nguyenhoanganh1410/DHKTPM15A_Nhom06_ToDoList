@@ -14,10 +14,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.dhktpm15a_nhom06_todoapp.R;
+import com.example.dhktpm15a_nhom06_todoapp.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterActivity extends AppCompatActivity {
     private TextView txtSignIn;
@@ -25,6 +28,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText etGmail;
     private EditText etPass;
     private EditText etPassAgain;
+    private EditText etUserName;
     FirebaseAuth mAuth;
 
 
@@ -63,10 +67,16 @@ public class RegisterActivity extends AppCompatActivity {
         String email = etGmail.getText().toString().trim();
         String pass = etPass.getText().toString().trim();
         String passAgian = etPassAgain.getText().toString().trim();
+        String userName = etUserName.getText().toString();
 
-        if(TextUtils.isEmpty(email)){
+        if (userName.length()<=0||userName.isEmpty()){
+            etUserName.setError("Name cannot br empty");
+            etUserName.requestFocus();
+
+        }else if(TextUtils.isEmpty(email)){
             etGmail.setError("Email cannot br empty");
             etGmail.requestFocus();
+
         }else if(TextUtils.isEmpty(pass)){
             etPass.setError("Password cannot br empty");
             etPass.requestFocus();
@@ -82,6 +92,12 @@ public class RegisterActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(task.isSuccessful() ){
+                         String uid = mAuth.getCurrentUser().getUid();
+
+                        FirebaseDatabase db = FirebaseDatabase.getInstance();
+                        DatabaseReference myRef = db.getReference("User");
+                        User user = new User(userName,email,pass);
+                        myRef.child(uid).setValue(user);
                         Toast.makeText(RegisterActivity.this, "user registered sucessfilly", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                     }

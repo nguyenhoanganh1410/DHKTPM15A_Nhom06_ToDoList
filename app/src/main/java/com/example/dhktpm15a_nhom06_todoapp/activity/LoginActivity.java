@@ -69,7 +69,11 @@ public class LoginActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(task.isSuccessful() ){
                         Toast.makeText(LoginActivity.this, "user signin sucessfilly", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                       String uid = mAuth.getCurrentUser().getUid();
+                        Intent i = new Intent(LoginActivity.this,HomeActivity.class);
+                        i.putExtra("uid",uid);
+                        startActivity(i);
+
                     }
                     else{
                         Toast.makeText(LoginActivity.this, "registration erro :" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
