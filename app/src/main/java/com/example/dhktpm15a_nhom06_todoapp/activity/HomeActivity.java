@@ -94,28 +94,15 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         spiner.setAdapter(adapter);
         spiner.setOnItemSelectedListener(this);
 
-        //
 
 
-
-
-
-        //listTask = AppDatabase.getInstance(this).taskDao().getAll();
-        //listView = (ListView) findViewById(R.id.idListView);
-        //listTask = new ArrayList<>();
         //get all from realtime DB
        renderListTaskFromRealtimeDatabase();
-//        Toast.makeText(HomeActivity.this, String.valueOf(listTask.size()), Toast.LENGTH_SHORT).show();
-//        long millis = System.currentTimeMillis();
-//        listTask.add(new Task(1, "Work", "android", new Date(millis)      ));
-//        listTask.add(new Task(2, "Work1", "android", new Date(millis)      ));
-//        listTask.add(new Task(3, "Work2", "android", new Date(millis)      ));
-//        listTask.add(new Task(4, "Work3", "android", new Date(millis)      ));
 
 
         listView = (ListView) findViewById(R.id.idListView);
         TaskAdapter taskAdapter = new TaskAdapter(this, R.layout.activity_item_task, listTask);
-//        listView.setAdapter(taskAdapter);
+
         registerForContextMenu(listView);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -134,10 +121,6 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
            } else {
                 txtNameUser.setText("Hi, " + user.getDisplayName());
            }
-
-//            listView =  findViewById(R.id.idListView);
-//            taskAdapter = new TaskAdapter(this, R.layout.activity_item_task, listTask);
-//            listView.setAdapter(taskAdapter);
 
 
            // mAuth = FirebaseAuth.getInstance();
@@ -174,23 +157,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
                 }
             });
         }
-
-
-//        //su kien chon 1 item trong drop list
-//        //viet them ....
-//        @Override
-//        public void onItemSelected (AdapterView < ? > adapterView, View view,int i, long l){
-//
-//            Toast.makeText(this, adapterView.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
-//            FilterTask(adapterView.getSelectedItem().toString());
-//
-//
-//        }
-//
-//        @Override
-//        public void onNothingSelected (AdapterView < ? > adapterView){
-//
-//        }
+        
     }
 
     //render list from realtime firebase
