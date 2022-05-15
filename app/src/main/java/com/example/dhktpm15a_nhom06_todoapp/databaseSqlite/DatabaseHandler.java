@@ -1,4 +1,4 @@
-package com.example.dhktpm15a_nhom06_todoapp.Database;
+package com.example.dhktpm15a_nhom06_todoapp.databaseSqlite;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.dhktpm15a_nhom06_todoapp.model.Task;
@@ -15,7 +14,6 @@ import com.example.dhktpm15a_nhom06_todoapp.model.Task;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class DatabaseHandler extends SQLiteOpenHelper {

@@ -3,6 +3,15 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/HK2/DHKTPM15A_Nhom06_ToDoList/app/src/main/res/layout/activity_home_screen.xml" value="0.275" />
+        <entry key="..\:/HK2/DHKTPM15A_Nhom06_ToDoList/app/src/main/res/layout/activity_item_task.xml" value="0.14629629629629629" />
+        <entry key="..\:/HK2/DHKTPM15A_Nhom06_ToDoList/app/src/main/res/layout/activity_login.xml" value="0.14629629629629629" />
+        <entry key="..\:/HK2/DHKTPM15A_Nhom06_ToDoList/app/src/main/res/layout/activity_main.xml" value="0.14629629629629629" />
+        <entry key="..\:/HK2/DHKTPM15A_Nhom06_ToDoList/app/src/main/res/layout/activity_register.xml" value="0.14629629629629629" />
+        <entry key="..\:/HK2/DHKTPM15A_Nhom06_ToDoList/app/src/main/res/layout/color_spinner_layout.xml" value="0.14629629629629629" />
+        <entry key="..\:/HK2/DHKTPM15A_Nhom06_ToDoList/app/src/main/res/layout/context_menu.xml" value="0.14629629629629629" />
+        <entry key="..\:/HK2/DHKTPM15A_Nhom06_ToDoList/app/src/main/res/layout/spinner_dropdown_layout.xml" value="0.14629629629629629" />
+        <entry key="..\:/HK2/DHKTPM15A_Nhom06_ToDoList/app/src/main/res/layout/update_task.xml" value="0.25052083333333336" />
         <entry key="..\:/HK2/MobileProject/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
         <entry key="..\:/HK2/MobileProject/app/src/main/res/layout/activity_home_screen.xml" value="0.275" />
         <entry key="..\:/HK2/MobileProject/app/src/main/res/layout/activity_item_task.xml" value="0.275" />

@@ -2,13 +2,18 @@ package com.example.dhktpm15a_nhom06_todoapp.activity;
 
 import static android.content.ContentValues.TAG;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -16,15 +21,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.dhktpm15a_nhom06_todoapp.AddScreenActivity;
 import com.example.dhktpm15a_nhom06_todoapp.MainActivity;
 import com.example.dhktpm15a_nhom06_todoapp.R;
 import com.example.dhktpm15a_nhom06_todoapp.adaper.TaskAdapter;
-import com.example.dhktpm15a_nhom06_todoapp.database.AppDatabase;
+import com.example.dhktpm15a_nhom06_todoapp.dao.TaskDaoFireBase;
+//import com.example.dhktpm15a_nhom06_todoapp.database.AppDatabase;
 import com.example.dhktpm15a_nhom06_todoapp.model.Task;
 import com.example.dhktpm15a_nhom06_todoapp.model.User;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -46,9 +55,11 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
     private ImageView imgLogout;
 
     private Button btnAddTask;
-
-   private   TaskAdapter taskAdapter;
-
+    private  Task task;
+    private TaskDaoFireBase taskDaoFireBase;
+    private   TaskAdapter taskAdapter;
+    private static final int MENU_ITEM_EDIT = 222;
+    private static final int MENU_ITEM_DELETE = 444;
     FirebaseAuth mAuth;
     private DatabaseReference databaseReference;
     @Override
@@ -56,6 +67,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
 
+        taskDaoFireBase = new TaskDaoFireBase();
         //get id
         txtNameUser = findViewById(R.id.txtNameUser);
         imgLogout = findViewById(R.id.imgLogout);
@@ -89,41 +101,50 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
 
 
         //listTask = AppDatabase.getInstance(this).taskDao().getAll();
-
+        //listView = (ListView) findViewById(R.id.idListView);
+        //listTask = new ArrayList<>();
         //get all from realtime DB
-        renderListTaskFromRealtimeDatabase();
+       renderListTaskFromRealtimeDatabase();
 //        Toast.makeText(HomeActivity.this, String.valueOf(listTask.size()), Toast.LENGTH_SHORT).show();
 //        long millis = System.currentTimeMillis();
 //        listTask.add(new Task(1, "Work", "android", new Date(millis)      ));
-//        listTask.add(new Task(2, "Work", "android", new Date(millis)      ));
-//        listTask.add(new Task(3, "Work", "android", new Date(millis)      ));
-//        listTask.add(new Task(4, "Work", "android", new Date(millis)      ));
+//        listTask.add(new Task(2, "Work1", "android", new Date(millis)      ));
+//        listTask.add(new Task(3, "Work2", "android", new Date(millis)      ));
+//        listTask.add(new Task(4, "Work3", "android", new Date(millis)      ));
 
 
-
-//        TaskAdapter taskAdapter = new TaskAdapter(this, R.layout.activity_item_task, listTask);
+        listView = (ListView) findViewById(R.id.idListView);
+        TaskAdapter taskAdapter = new TaskAdapter(this, R.layout.activity_item_task, listTask);
 //        listView.setAdapter(taskAdapter);
+        registerForContextMenu(listView);
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                task= listTask.get(i);
+                Log.d(TAG,task.getTitle());
+            }
+        });
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
             if (user.getDisplayName().length() == 0) {
-                txtNameUser.setText("Hi, admin ");
-            } else {
+               txtNameUser.setText("Hi, admin ");
+           } else {
                 txtNameUser.setText("Hi, " + user.getDisplayName());
-            }
+           }
 
 //            listView =  findViewById(R.id.idListView);
 //            taskAdapter = new TaskAdapter(this, R.layout.activity_item_task, listTask);
 //            listView.setAdapter(taskAdapter);
 
 
-            mAuth = FirebaseAuth.getInstance();
+           // mAuth = FirebaseAuth.getInstance();
 //        FirebaseUser user = mAuth.getCurrentUser();
 
-            FirebaseDatabase db = FirebaseDatabase.getInstance();
-            DatabaseReference myRef = db.getReference("User");
+         //   FirebaseDatabase db = FirebaseDatabase.getInstance();
+        //    DatabaseReference myRef = db.getReference("User");
 
 //            Intent intent = getIntent();
 //            if (intent != null) {
@@ -146,8 +167,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
 
             imgLogout.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
-                    // Toast.makeText(MainActivity.this, "user registered sucessfilly", Toast.LENGTH_SHORT).show();
+                public void onClick(View v) {// Toast.makeText(MainActivity.this, "user registered sucessfilly", Toast.LENGTH_SHORT).show();
                     mAuth.signOut();
                     Intent intent = new Intent(HomeActivity.this, MainActivity.class);
                     startActivity(intent);
@@ -181,19 +201,19 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         databaseReference = db.getReference(user.getEmail().substring(0, user.getEmail().length() - 4));
 
 
-        List<Task> list = new ArrayList<>();
+        listTask = new ArrayList<>();
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Task task = dataSnapshot.getValue(Task.class);
 
-                    list.add(task);
+                    listTask.add(task);
 
 
                 }
                 listView = (ListView) findViewById(R.id.idListView);
-                TaskAdapter taskAdapter = new TaskAdapter(HomeActivity.this, R.layout.activity_item_task, list);
+                taskAdapter = new TaskAdapter(HomeActivity.this, R.layout.activity_item_task, listTask);
                 listView.setAdapter(taskAdapter);
 
             }
@@ -201,6 +221,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(HomeActivity.this, "Get list Task faild : " + error.getMessage(), Toast.LENGTH_SHORT).show();
+
             }
         });
     }
@@ -208,6 +229,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
 
 
     public void FilterTask(String name){
+
         if (name.contains("All")){
             name="";
         }
@@ -217,18 +239,85 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
                 list.add(task);
             }
         }
-        taskAdapter.setListTask(list);
-        taskAdapter.notifyDataSetChanged();
 
+        TaskAdapter taskAdapter = new TaskAdapter(this,R.layout.activity_item_task,list);
+        listView.setAdapter(taskAdapter);
     }
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
+        FilterTask(adapterView.getSelectedItem().toString());
+       Log.d("TitleTask:",adapterView.getSelectedItem().toString());
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+
+        menu.setHeaderTitle("Select Action");
+        menu.add(0, MENU_ITEM_EDIT, 0, "Update Task");
+        menu.add(0, MENU_ITEM_DELETE, 0, "Delete Task");
+        AdapterContextMenuInfo info = (AdapterContextMenuInfo)menuInfo;
+        int position = info.position;
+        task= listTask.get(position);
+        Log.d(TAG,task.getTitle());
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId()==MENU_ITEM_EDIT){
+            AlertDialog.Builder mBuilder= new AlertDialog.Builder(HomeActivity.this);
+            View  view= getLayoutInflater().inflate(R.layout.update_task,null);
+            EditText edContent = view.findViewById(R.id.idTextInput);
+            Button btnUP = view.findViewById(R.id.idbntUp);
+            edContent.setText(task.getContent());
+            edContent.setSelectAllOnFocus(true);
+            mBuilder.setView(view);
+            AlertDialog dialog =   mBuilder.create();
+            btnUP.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String content = edContent.getText().toString().trim();
+                    task.setContent(content);
+                    taskDaoFireBase.updateTask(task).addOnSuccessListener(succ ->{
+                        Toast.makeText(getApplication(), "Update task sucessfully!!", Toast.LENGTH_SHORT).show();
+                       renderListTaskFromRealtimeDatabase();
+                        dialog.cancel();
+                });
+            }});
+
+
+            dialog.show();
+        }else if (item.getItemId()==MENU_ITEM_DELETE){
+            new AlertDialog.Builder(this)
+                    .setMessage("Are you sure want to delete Task  ?")
+                    .setCancelable(false)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                                taskDaoFireBase.deleteTask(task).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull com.google.android.gms.tasks.Task<Void> task) {
+                                        Toast.makeText(getApplication(),"Delete sucessfully",Toast.LENGTH_LONG).show();
+                                        renderListTaskFromRealtimeDatabase();
+                                       // Log.d("Remove",task.getResult().toString());
+                                    }
+                                });
+                        }
+                    }).setNegativeButton("No",null).show();
+
+        }
+
+
+
+       // return super.onContextItemSelected(item);
+        return true;
+
 
     }
 }

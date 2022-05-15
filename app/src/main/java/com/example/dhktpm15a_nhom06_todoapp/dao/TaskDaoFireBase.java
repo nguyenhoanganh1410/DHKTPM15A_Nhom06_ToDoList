@@ -20,4 +20,14 @@ public class TaskDaoFireBase {
         String pathObject = String.valueOf(task.getId());
         return databaseReference.child(pathObject).setValue(task);
     }
+    public com.google.android.gms.tasks.Task<Void> updateTask(Task  task){
+        String pathObject = String.valueOf(task.getId());
+        return databaseReference.child(pathObject).setValue(task);
+
+    }
+    public com.google.android.gms.tasks.Task<Void> deleteTask(Task  task){
+        String pathObject = String.valueOf(task.getId());
+        return databaseReference.child(pathObject).removeValue();
+
+    }
 }

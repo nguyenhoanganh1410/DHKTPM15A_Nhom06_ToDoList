@@ -39,11 +39,13 @@ public class TaskAdapter extends BaseAdapter {
         this.listTask = listTask;
     }
 
+
     public List<Task> getListTask() {
         return listTask;
     }
 
     public void setListTask(List<Task> listTask) {
+
         this.listTask = listTask;
     }
 
@@ -95,27 +97,27 @@ public class TaskAdapter extends BaseAdapter {
             tvDay.setText(language.getDate().toString().substring(8,10));
 
         }
-        convertView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                positionSelect = position;
-                notifyDataSetChanged();
-//                Intent i = new Intent(context, DetailDonutActivity.class);
+//        convertView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
 //
-//                Bundle data1 = new Bundle();
-//                data1.putSerializable("donut",listLanguage.get(position) );
-//                i.putExtras(data1);
+//                positionSelect = position;
+//                notifyDataSetChanged();
+////                Intent i = new Intent(context, DetailDonutActivity.class);
+////
+////                Bundle data1 = new Bundle();
+////                data1.putSerializable("donut",listLanguage.get(position) );
+////                i.putExtras(data1);
+////
+////                context.startActivity(i);
+//            }
+//        });
 //
-//                context.startActivity(i);
-            }
-        });
-
-        if (positionSelect == position) {
-            linearLayout.setBackgroundColor(Color.rgb(249, 235, 200));
-        } else {
-            linearLayout.setBackgroundColor(Color.WHITE);
-        }
+//        if (positionSelect == position) {
+//            linearLayout.setBackgroundColor(Color.rgb(249, 235, 200));
+//        } else {
+//            linearLayout.setBackgroundColor(Color.WHITE);
+//        }
         return convertView;
     }
 

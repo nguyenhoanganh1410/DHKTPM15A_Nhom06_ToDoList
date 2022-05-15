@@ -13,10 +13,11 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+//import com.example.dhktpm15a_nhom06_todoapp.database.AppDatabase;
 import com.example.dhktpm15a_nhom06_todoapp.activity.HomeActivity;
 import com.example.dhktpm15a_nhom06_todoapp.activity.RegisterActivity;
 import com.example.dhktpm15a_nhom06_todoapp.dao.TaskDaoFireBase;
-import com.example.dhktpm15a_nhom06_todoapp.database.AppDatabase;
+
 import com.example.dhktpm15a_nhom06_todoapp.model.Task;
 
 import java.util.Date;
@@ -85,7 +86,7 @@ public class AddScreenActivity extends AppCompatActivity implements AdapterView.
             //them vao db
             long millis = System.currentTimeMillis();
             Task task = new Task(title,content, new Date(millis));
-            AppDatabase.getInstance(this).taskDao().insertTask(task);
+        //    AppDatabase.getInstance(this).taskDao().insertTask(task);
             Toast.makeText(this, "Add task sucessfully!!", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(AddScreenActivity.this, HomeActivity.class);
             startActivity(intent);
