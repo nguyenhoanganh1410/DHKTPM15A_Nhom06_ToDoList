@@ -97,12 +97,13 @@ public class AddScreenActivity extends AppCompatActivity implements AdapterView.
         TaskDaoFireBase taskDaoFireBase = new TaskDaoFireBase();
         String content = edContent.getText().toString().trim();
         if(TextUtils.isEmpty(content)){
-            edContent.setError("Email cannot br empty");
+            edContent.setError("Content cannot br empty");
             edContent.requestFocus();
-        }
-        else if(title == ""){
+
+        }else if (title.equals("All")){
             Toast.makeText(this, "Bạn chưa chọn loại công việc?", Toast.LENGTH_SHORT).show();
         }
+
         else{
             //them vao db
             long millis = System.currentTimeMillis();

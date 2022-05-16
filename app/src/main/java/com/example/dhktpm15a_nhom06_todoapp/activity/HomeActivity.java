@@ -43,6 +43,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -129,11 +130,22 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
-            if (user.getDisplayName().length() == 0) {
-               txtNameUser.setText("Hi, admin ");
-           } else {
-                txtNameUser.setText("Hi, " + user.getDisplayName());
-           }
+
+            String displayName = user.getDisplayName();
+            Log.d(TAG, "displayname: "+displayName);
+
+            for (UserInfo userInfo : user.getProviderData()) {
+                if (displayName == null && userInfo.getDisplayName() != null) {
+                    displayName = userInfo.getDisplayName();
+                }
+            }
+            txtNameUser.setText("Hi Admin");
+//            if (user.getDisplayName().length() == 0) {
+//                txtNameUser.setText("Hi, admin ");
+//            } else {
+//                txtNameUser.setText("Hi, " + user.getDisplayName());
+//            }
+        }
 
 //
 //        mAuth = FirebaseAuth.getInstance();
@@ -183,7 +195,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
             });
         }
         
-    }
+
 
     //render list from realtime firebase
     private void renderListTaskFromRealtimeDatabase() {
