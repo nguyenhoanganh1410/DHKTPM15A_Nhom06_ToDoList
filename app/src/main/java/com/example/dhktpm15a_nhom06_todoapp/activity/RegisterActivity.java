@@ -1,10 +1,16 @@
 package com.example.dhktpm15a_nhom06_todoapp.activity;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
@@ -28,7 +34,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText etGmail;
     private EditText etPass;
     private EditText etPassAgain;
-    private EditText etUserName;
+
     FirebaseAuth mAuth;
 
 
@@ -38,7 +44,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         txtSignIn = (TextView) findViewById(R.id.txtSignin);
-        btnRegister = findViewById(R.id.button4);
+        btnRegister = findViewById(R.id.btnRegister);
         etGmail = findViewById(R.id.emailRegister );
         etPass = findViewById(R.id.passworldRegister);
         etPassAgain = findViewById(R.id.passworldRegisterAgain);
@@ -67,13 +73,9 @@ public class RegisterActivity extends AppCompatActivity {
         String email = etGmail.getText().toString().trim();
         String pass = etPass.getText().toString().trim();
         String passAgian = etPassAgain.getText().toString().trim();
-        String userName = etUserName.getText().toString();
 
-        if (userName.length()<=0||userName.isEmpty()){
-            etUserName.setError("Name cannot br empty");
-            etUserName.requestFocus();
 
-        }else if(TextUtils.isEmpty(email)){
+         if(TextUtils.isEmpty(email)){
             etGmail.setError("Email cannot br empty");
             etGmail.requestFocus();
 
@@ -82,29 +84,58 @@ public class RegisterActivity extends AppCompatActivity {
             etPass.requestFocus();
 
         }
+         else if(pass.length() < 6){
+             etPass.setError("Password must be greater than or equal to 6");
+             etPass.requestFocus();
+         }
         else if(!pass.equals(passAgian)){
             etPass.setError("Password not equal");
             etPassAgain.setError("Password not equal");
             etPass.requestFocus();
         }
         else {
-            mAuth.createUserWithEmailAndPassword(email,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if(task.isSuccessful() ){
-                         String uid = mAuth.getCurrentUser().getUid();
+             mAuth.createUserWithEmailAndPassword(email,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                 @Override
+                 public void onComplete(@NonNull Task<AuthResult> task) {
+                     if(task.isSuccessful() ){
+                         Toast.makeText(RegisterActivity.this, "user registered sucessfilly", Toast.LENGTH_SHORT).show();
+                         startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+                     }
+                     else{
+                         if(!isConnected(RegisterActivity.this)){
+                             showCustomeDialog();
+                         }
+                         else{
+                             Toast.makeText(RegisterActivity.this, "registration erro :" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                         }
 
-                        FirebaseDatabase db = FirebaseDatabase.getInstance();
-                        DatabaseReference myRef = db.getReference("User");
-                        User user = new User(userName,email,pass);
-                        myRef.child(uid).setValue(user);
-                        Toast.makeText(RegisterActivity.this, "user registered sucessfilly", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
-                    }
-                    else{
-                        Toast.makeText(RegisterActivity.this, "registration erro :" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
+                     }
+                 }
+             });
         }}
+
+
+    public boolean isConnected(RegisterActivity login){
+        ConnectivityManager connectivityManager = (ConnectivityManager) login.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo wifiConn = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        NetworkInfo mobileConn = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+
+        if( (wifiConn != null && wifiConn.isConnected() )  || (mobileConn != null && mobileConn.isConnected()) ){
+            return true;
+        }
+
+        return false;
+    }
+
+    public void showCustomeDialog () {
+        AlertDialog.Builder mBuilder= new AlertDialog.Builder(RegisterActivity.this);
+        mBuilder.setMessage("Please connect to the internet to proceed further")
+                .setCancelable(false)
+                .setPositiveButton("Connect", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+                    }
+                }).setNegativeButton("Cancel",null).show();
+    }
 }

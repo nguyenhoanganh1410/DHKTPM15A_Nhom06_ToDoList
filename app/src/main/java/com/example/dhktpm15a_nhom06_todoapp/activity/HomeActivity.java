@@ -2,10 +2,14 @@ package com.example.dhktpm15a_nhom06_todoapp.activity;
 
 import static android.content.ContentValues.TAG;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -76,6 +80,8 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
         getSupportActionBar().hide();
+
+
         taskDaoFireBase = new TaskDaoFireBase();
         //get id
         txtNameUser = findViewById(R.id.txtNameUser);
@@ -111,7 +117,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
 
         listView = (ListView) findViewById(R.id.idListView);
         TaskAdapter taskAdapter = new TaskAdapter(this, R.layout.activity_item_task, listTask);
-
+        Log.d(TAG, String.valueOf(listTask.size()));
         registerForContextMenu(listView);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -199,6 +205,8 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
 
 
                 }
+
+                //sort list by date
                 Collections.sort(listTask, new Comparator<Task>() {
                     public int compare(Task o1, Task o2) {
                         return o1.getDate().compareTo(o2.getDate());
@@ -324,4 +332,6 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
 
 
     }
+
+
 }
