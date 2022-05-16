@@ -102,7 +102,7 @@ public class TaskAdapter extends BaseAdapter {
 //            public void onClick(View v) {
 //
 //                positionSelect = position;
-//                notifyDataSetChanged();
+//              //  notifyDataSetChanged();
 ////                Intent i = new Intent(context, DetailDonutActivity.class);
 ////
 ////                Bundle data1 = new Bundle();
@@ -112,12 +112,12 @@ public class TaskAdapter extends BaseAdapter {
 ////                context.startActivity(i);
 //            }
 //        });
-//
-//        if (positionSelect == position) {
-//            linearLayout.setBackgroundColor(Color.rgb(249, 235, 200));
-//        } else {
-//            linearLayout.setBackgroundColor(Color.WHITE);
-//        }
+
+        if (positionSelect == position) {
+            linearLayout.setBackgroundColor(Color.rgb(249, 235, 200));
+        } else {
+            linearLayout.setBackgroundColor(Color.WHITE);
+        }
         return convertView;
     }
 

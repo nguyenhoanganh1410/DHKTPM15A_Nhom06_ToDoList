@@ -4,7 +4,9 @@ import static android.content.ContentValues.TAG;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuItem;
@@ -23,6 +25,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.dhktpm15a_nhom06_todoapp.AddScreenActivity;
 import com.example.dhktpm15a_nhom06_todoapp.MainActivity;
@@ -43,6 +46,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -62,11 +68,14 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
     private static final int MENU_ITEM_DELETE = 444;
     FirebaseAuth mAuth;
     private DatabaseReference databaseReference;
+
+
+    private int positionSelect = -1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
-
+        getSupportActionBar().hide();
         taskDaoFireBase = new TaskDaoFireBase();
         //get id
         txtNameUser = findViewById(R.id.txtNameUser);
@@ -148,12 +157,23 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
 //
 //            }
 
+            //log out
             imgLogout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {// Toast.makeText(MainActivity.this, "user registered sucessfilly", Toast.LENGTH_SHORT).show();
-                    mAuth.signOut();
-                    Intent intent = new Intent(HomeActivity.this, MainActivity.class);
-                    startActivity(intent);
+                    new AlertDialog.Builder(HomeActivity.this)
+                            .setMessage("Are you sure want to logout ?")
+                            .setCancelable(false)
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    mAuth.signOut();
+                                    Intent intent = new Intent(HomeActivity.this, MainActivity.class);
+                                    startActivity(intent);
+                                }
+                            }).setNegativeButton("No",null).show();
+
+
                 }
             });
         }
@@ -179,6 +199,12 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
 
 
                 }
+                Collections.sort(listTask, new Comparator<Task>() {
+                    public int compare(Task o1, Task o2) {
+                        return o1.getDate().compareTo(o2.getDate());
+                    }
+                });
+
                 listView = (ListView) findViewById(R.id.idListView);
                 taskAdapter = new TaskAdapter(HomeActivity.this, R.layout.activity_item_task, listTask);
                 listView.setAdapter(taskAdapter);
@@ -233,6 +259,9 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         int position = info.position;
         task= listTask.get(position);
         Log.d(TAG,task.getTitle());
+        Log.d(TAG, String.valueOf(position));
+
+
     }
 
     @Override
@@ -243,6 +272,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
             EditText edContent = view.findViewById(R.id.idTextInput);
             Button btnUP = view.findViewById(R.id.idbntUp);
             edContent.setText(task.getContent());
+            edContent.setTextColor(Color.BLACK);
             edContent.setSelectAllOnFocus(true);
             mBuilder.setView(view);
             AlertDialog dialog =   mBuilder.create();
@@ -250,12 +280,19 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
                 @Override
                 public void onClick(View view) {
                     String content = edContent.getText().toString().trim();
-                    task.setContent(content);
-                    taskDaoFireBase.updateTask(task).addOnSuccessListener(succ ->{
-                        Toast.makeText(getApplication(), "Update task sucessfully!!", Toast.LENGTH_SHORT).show();
-                       renderListTaskFromRealtimeDatabase();
-                        dialog.cancel();
-                });
+                    if(TextUtils.isEmpty(content)){
+                        edContent.setError("text cannot br empty");
+                        edContent.requestFocus();
+                    }
+                    else{
+                        task.setContent(content);
+                        taskDaoFireBase.updateTask(task).addOnSuccessListener(succ ->{
+                            Toast.makeText(getApplication(), "Update task sucessfully!!", Toast.LENGTH_SHORT).show();
+                            renderListTaskFromRealtimeDatabase();
+                            dialog.cancel();
+                        });
+                    }
+
             }});
 
 
