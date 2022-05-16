@@ -47,19 +47,19 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnAddScreen"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginStart="25dp"
-        android:layout_marginEnd="25dp"
-        android:layout_marginBottom="25dp"
+        android:layout_width="367dp"
+        android:layout_height="57dp"
+        android:layout_marginBottom="36dp"
         android:width="1dp"
-        android:background="@drawable/add_button"
 
+        android:background="@drawable/add_button"
         android:padding="10dp"
-        android:text="Save Task"
-        android:textColor="@color/main_color"
+        android:text="ADD"
+        android:textColor="#009688"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.471"
         app:layout_constraintStart_toStartOf="parent" />
 
     <RelativeLayout
